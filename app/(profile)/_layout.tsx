@@ -5,18 +5,32 @@ import { useTheme } from "../../src/context/ThemeContext";
 export default function ProfileLayout() {
   const { theme } = useTheme();
   
-  // TODO: Replace with actual username from user store/context
-  // Example: const { user } = useAuthStore(); const username = user?.name || "User";
   const username = "Pixsellz";
 
+  const screenOptions = React.useMemo(() => ({
+    contentStyle: {
+      backgroundColor: theme.colors.background.primary,
+    },
+    headerStyle: {
+      backgroundColor: theme.colors.background.primary,
+    },
+    headerTintColor: theme.colors.text.primary,
+    headerTitleStyle: {
+      color: theme.colors.text.primary,
+      fontWeight: "700" as const,
+      fontSize: 18,
+    },
+  }), [theme]);
+
+  const listsOptions = React.useMemo(() => ({
+    headerShown: true,
+    headerBackTitle: "",
+    title: username,
+    headerShadowVisible: false,
+  }), [username]);
+
   return (
-    <Stack
-      screenOptions={{
-        contentStyle: {
-          backgroundColor: theme.colors.background.primary,
-        },
-      }}
-    >
+    <Stack screenOptions={screenOptions}>
       <Stack.Screen
         name="index"
         options={{
@@ -25,22 +39,8 @@ export default function ProfileLayout() {
         }}
       />
       <Stack.Screen
-        name="lists"
-        options={{
-          title: username,
-          headerShown: true,
-          headerBackTitle: "",
-          headerStyle: {
-            backgroundColor: theme.colors.background.primary,
-          },
-          headerTintColor: theme.colors.text.primary,
-          headerTitleStyle: {
-            color: theme.colors.text.primary,
-            fontWeight: "700",
-            fontSize: 18,
-          },
-          headerShadowVisible: true,
-        }}
+        name="Lists"
+        options={listsOptions}
       />
     </Stack>
   );

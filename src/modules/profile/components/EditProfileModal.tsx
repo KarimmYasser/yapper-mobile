@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   Modal,
@@ -19,11 +19,12 @@ type Props = {
 };
 
 const EditProfileModal: React.FC<Props> = ({ visible, onclose }) => {
-  const [name, setName] = React.useState("");
-  const [bio, setBio] = React.useState("");
-  const [location, setLocation] = React.useState("");
-  const [website, setWebsite] = React.useState("");
-  const [birthday, setBirthday] = React.useState("");
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const [location, setLocation] = useState("");
+  const [website, setWebsite] = useState("");
+  const [birthday, setBirthday] = useState("");
+  
 
   const { theme } = useTheme();
   const editModalStyles = createEditModalStyles(theme);

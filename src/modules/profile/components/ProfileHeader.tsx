@@ -1,14 +1,17 @@
 import { useRouter } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
+  findNodeHandle,
   Image,
   Text,
   TouchableOpacity,
+  UIManager,
   View
 } from "react-native";
 import { useTheme } from "../../../context/ThemeContext";
 import { createHeaderStyles } from "../styles/profile-header-styles";
+import AvatarViewer from "./AvatarViewer";
 import EditProfileModal from "./EditProfileModal";
 
 export default function ProfileHeader() {
@@ -20,11 +23,32 @@ export default function ProfileHeader() {
   const imageUri = "https://randomuser.me/api/portraits/men/1.jpg";
   const bannerUri = "https://picsum.photos/1200/400";
 
+  // Media Related States
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [origin, setOrigin] = useState<null | {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }>(null);
+  const avatarRef = useRef<any>(null);
+  const bannerRef = useRef<any>(null);
+
   return (
     <View style={headerStyles.container}>
       {/* Banner */}
       <TouchableOpacity
         activeOpacity={0.95}
+        ref={bannerRef}
+        onPress={() => {
+          const handle = findNodeHandle(bannerRef.current);
+          if (handle) {
+            UIManager.measureInWindow(handle, (x, y, width, height) => {
+              setOrigin({ x, y, width, height });
+              setViewerOpen(true);
+            });
+          }
+        }}
       >
         <Image source={{ uri: bannerUri }} style={headerStyles.banner} />
 
@@ -41,6 +65,17 @@ export default function ProfileHeader() {
       <View style={headerStyles.imageContainer}>
         <TouchableOpacity
           activeOpacity={0.9}
+          ref={avatarRef}
+          onPress={() => {
+            // measure avatar position in window and open viewer
+            const handle = findNodeHandle(avatarRef.current);
+            if (handle) {
+              UIManager.measureInWindow(handle, (x, y, width, height) => {
+                setOrigin({ x, y, width, height });
+                setViewerOpen(true);
+              });
+            }
+          }}
         >
           <Image source={{ uri: imageUri }} style={headerStyles.avatar} />
         </TouchableOpacity>
@@ -87,6 +122,17 @@ export default function ProfileHeader() {
       <EditProfileModal
         visible={editModalOpen}
         onclose={() => setEditModalOpen(false)}
+      />
+
+
+      {/* Avatar Viewer */}
+      <AvatarViewer
+        visible={viewerOpen}
+        imageUri={origin && origin.width > 300 ? bannerUri : imageUri}
+        origin={origin}
+        isBanner={origin ? origin.width > 300 : false}
+        onClose={() => setViewerOpen(false)}
+        onEditRequested={() => setEditModalOpen(true)}
       />
     </View>
   );
