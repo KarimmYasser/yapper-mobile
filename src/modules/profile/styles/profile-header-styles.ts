@@ -38,6 +38,10 @@ export const createHeaderStyles = (theme: Theme) =>
       paddingVertical: 8,
       marginTop: 12,
     },
+    followingButton: {
+      backgroundColor: theme.colors.text.link,
+      borderColor: theme.colors.text.link,
+    },
     backButton: {
       backgroundColor: "rgba(0,0,0,0.65)",
       width: 38,
@@ -50,6 +54,7 @@ export const createHeaderStyles = (theme: Theme) =>
       left: 20,
     },
     editText: { color: theme.colors.text.link, fontWeight: "600" },
+    followingText: { color: theme.colors.background.primary },
     info: { paddingHorizontal: 16, marginTop: 10 },
     name: { fontSize: 20, fontWeight: "700", color: theme.colors.text.primary },
     handle: { color: theme.colors.text.secondary, marginBottom: 8 },

@@ -13,8 +13,14 @@ import { ImageOrigin, openImageViewer } from "../utils/profile-header.utils";
 import AvatarViewer from "./AvatarViewer";
 import EditProfileModal from "./EditProfileModal";
 
-export default function ProfileHeader() {
+type ProfileHeaderProps = {
+  userId?: string;
+  isOwnProfile?: boolean;
+};
+
+export default function ProfileHeader({ userId, isOwnProfile = true }: ProfileHeaderProps) {
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
   const [imageUri, setImageUri] = useState("https://randomuser.me/api/portraits/men/1.jpg");
   const [bannerUri, setBannerUri] = useState("https://picsum.photos/1200/400");
   const { theme } = useTheme();
@@ -61,13 +67,30 @@ export default function ProfileHeader() {
           <Image source={{ uri: imageUri }} style={headerStyles.avatar} />
         </TouchableOpacity>
 
-        {/* Edit button */}
-        <TouchableOpacity
-          style={headerStyles.editButton}
-          onPress={() => setEditModalOpen(true)}
-        >
-          <Text style={headerStyles.editText}>Edit profile</Text>
-        </TouchableOpacity>
+        {/* Edit or Follow button */}
+        {isOwnProfile ? (
+          <TouchableOpacity
+            style={headerStyles.editButton}
+            onPress={() => setEditModalOpen(true)}
+          >
+            <Text style={headerStyles.editText}>Edit profile</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[
+              headerStyles.editButton,
+              isFollowing && headerStyles.followingButton
+            ]}
+            onPress={() => setIsFollowing(!isFollowing)}
+          >
+            <Text style={[
+              headerStyles.editText,
+              isFollowing && headerStyles.followingText
+            ]}>
+              {isFollowing ? "Following" : "Follow"}
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       {/* Info */}
@@ -99,16 +122,17 @@ export default function ProfileHeader() {
         </View>
       </View>
 
-      {/* Edit Profile Modal */}
-      <EditProfileModal
-        visible={editModalOpen}
-        imageUri={imageUri}
-        bannerUri={bannerUri}
-        onImageChange={(newUri) => setImageUri(newUri)}
-        onBannerChange={(newUri) => setBannerUri(newUri)}
-        onClose={() => setEditModalOpen(false)}
-      />
-
+      {/* Edit Profile Modal - Only for own profile */}
+      {isOwnProfile && (
+        <EditProfileModal
+          visible={editModalOpen}
+          imageUri={imageUri}
+          bannerUri={bannerUri}
+          onImageChange={(newUri) => setImageUri(newUri)}
+          onBannerChange={(newUri) => setBannerUri(newUri)}
+          onClose={() => setEditModalOpen(false)}
+        />
+      )}
 
       {/* Avatar Viewer */}
       <AvatarViewer
@@ -117,7 +141,7 @@ export default function ProfileHeader() {
         origin={origin}
         isBanner={origin ? origin.width > 300 : false}
         onClose={() => setViewerOpen(false)}
-        onEditRequested={() => setEditModalOpen(true)}
+        onEditRequested={isOwnProfile ? () => setEditModalOpen(true) : undefined}
       />
     </View>
   );

@@ -19,6 +19,13 @@ const HomeScreen = () => {
       >
         <Text style={styles.buttonText}>Go to Profile</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity 
+        style={styles.button} 
+        onPress={() => router.push('/(profile)/2')}
+      >
+        <Text style={styles.buttonText}>Go to Other User Profile</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -43,6 +50,7 @@ const createStyles = (theme: Theme) =>
       paddingHorizontal: theme.spacing.xl,
       paddingVertical: theme.spacing.md,
       borderRadius: theme.borderRadius.md,
+      marginVertical: theme.spacing.sm,
     },
     buttonText: {
       color: theme.colors.text.inverse,

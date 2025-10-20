@@ -39,6 +39,13 @@ export default function ProfileLayout() {
         }}
       />
       <Stack.Screen
+        name="[id]"
+        options={{
+          title: "Profile",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="Lists"
         options={listsOptions}
       />

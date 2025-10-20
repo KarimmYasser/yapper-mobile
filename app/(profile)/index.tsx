@@ -1,5 +1,5 @@
 import ProfileContainer from "@/src/modules/profile/containers/ProfileContainer";
 
 export default function Profile() {
-  return <ProfileContainer />;
+  return <ProfileContainer isOwnProfile={true} />;
 }
