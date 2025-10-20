@@ -10,16 +10,20 @@ import {
 } from "react-native";
 import { useTheme } from "../../../context/ThemeContext";
 import { createEditModalStyles } from "../styles/edit-modal-styles";
-import IconButton from "../ui/IconButton";
 import Input from "../ui/Input";
+import { DEFAULT_AVATAR_URI, DEFAULT_BANNER_URI, showImagePickerOptions } from "../utils/edit-profile.utils";
 
 type Props = {
   visible: boolean;
-  onclose: () => void;
+  imageUri: string;
+  bannerUri: string;
+  onImageChange: (newUri: string) => void;
+  onBannerChange: (newUri: string) => void;
+  onClose: () => void;
 };
 
-const EditProfileModal: React.FC<Props> = ({ visible, onclose }) => {
-  const [name, setName] = useState("");
+const EditProfileModal: React.FC<Props> = ({ visible, onClose, imageUri, bannerUri, onImageChange, onBannerChange }) => {
+  const [name, setName] = useState(""); 1
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
   const [website, setWebsite] = useState("");
@@ -29,22 +33,38 @@ const EditProfileModal: React.FC<Props> = ({ visible, onclose }) => {
   const { theme } = useTheme();
   const editModalStyles = createEditModalStyles(theme);
 
+  const handleAvatarChange = () => {
+    showImagePickerOptions(
+      true, // isAvatar
+      onImageChange,
+      () => onImageChange(DEFAULT_AVATAR_URI)
+    );
+  };
+
+  const handleBannerChange = () => {
+    showImagePickerOptions(
+      false, // isBanner
+      onBannerChange,
+      () => onBannerChange(DEFAULT_BANNER_URI)
+    );
+  };
+
   return (
     <Modal
       visible={visible}
       animationType="slide"
       presentationStyle="pageSheet"
-      onRequestClose={onclose}
+      onRequestClose={onClose}
     >
       {/* Header buttons */}
       <View style={editModalStyles.buttonContainer}>
-        <TouchableOpacity onPress={onclose}>
+        <TouchableOpacity onPress={onClose}>
           <Text style={editModalStyles.buttonsText}>Cancel</Text>
         </TouchableOpacity>
 
         <Text style={editModalStyles.titleText}>Edit Profile</Text>
 
-        <TouchableOpacity onPress={onclose}>
+        <TouchableOpacity onPress={onClose}>
           <Text style={editModalStyles.buttonsText}>Save</Text>
         </TouchableOpacity>
       </View>
@@ -52,9 +72,9 @@ const EditProfileModal: React.FC<Props> = ({ visible, onclose }) => {
       {/* Modal content */}
       <View style={editModalStyles.contentContainer}>
         {/* Banner */}
-        <TouchableOpacity >
+        <TouchableOpacity onPress={handleBannerChange}>
           <Image
-            source={{ uri: "https://picsum.photos/1200/400" }}
+            source={{ uri: bannerUri }}
             style={editModalStyles.banner}
           />
         </TouchableOpacity>
@@ -62,19 +82,19 @@ const EditProfileModal: React.FC<Props> = ({ visible, onclose }) => {
         <View style={editModalStyles.insideContainer}>
           {/* Profile Image Edit */}
           <View style={editModalStyles.avatarContainer}>
-            <Image
-              source={{
-                uri:
-                  // selectedImage ||
-                  "https://randomuser.me/api/portraits/men/1.jpg",
-              }}
-              style={editModalStyles.avatar}
-            />
+            <TouchableOpacity onPress={handleAvatarChange}>
+              <Image
+                source={{
+                  uri: imageUri
+                }}
+                style={editModalStyles.avatar}
+              />
 
-            {/* Dark overlay + camera icon */}
-            <IconButton style={editModalStyles.overlay} >
-              <Ionicons name="camera-outline" size={20} color="#fff" />
-            </IconButton>
+              {/* Dark overlay + camera icon */}
+              <View style={editModalStyles.overlay}>
+                <Ionicons name="camera-outline" size={20} color="#fff" />
+              </View>
+            </TouchableOpacity>
           </View>
 
           {/* User Details */}

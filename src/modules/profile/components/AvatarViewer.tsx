@@ -2,7 +2,6 @@ import { XIcon } from "lucide-react-native";
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
-  Dimensions,
   Image,
   Modal,
   PanResponder,
@@ -12,6 +11,14 @@ import {
   View,
 } from "react-native";
 import ImageViewerStyle from "../styles/image-viewer-style";
+import {
+  animateClose,
+  animateOpen,
+  calculateOpeningAnimation,
+  handleSwipeProgress,
+  handleSwipeRelease,
+  resetAnimationValues,
+} from "../utils/avatar-viewer.utils";
 
 type Origin = { x: number; y: number; width: number; height: number } | null;
 
@@ -23,8 +30,6 @@ type Props = {
   onClose: () => void;
   onEditRequested?: () => void;
 };
-
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export default function AvatarViewer({
   visible,
@@ -41,75 +46,15 @@ export default function AvatarViewer({
 
   useEffect(() => {
     if (visible && origin) {
-      // Calculate initial position (from avatar/banner to center)
-      const originCenterX = origin.x + origin.width / 2;
-      const originCenterY = origin.y + origin.height / 2;
-      const screenCenterX = SCREEN_WIDTH / 2;
-      const screenCenterY = SCREEN_HEIGHT / 2;
-
-      // Calculate how much to translate
-      const initialTranslateX = originCenterX - screenCenterX;
-      const initialTranslateY = originCenterY - screenCenterY;
-
-      // Calculate initial scale (avatar size vs full screen size)
-      const targetSize = isBanner ? SCREEN_WIDTH : SCREEN_WIDTH;
-      const initialScale = origin.width / targetSize;
-
-      // Set initial values
-      translateX.setValue(initialTranslateX);
-      translateY.setValue(initialTranslateY);
-      scale.setValue(initialScale);
-      fadeAnim.setValue(0);
-
-      // Animate to center
-      requestAnimationFrame(() => {
-        Animated.parallel([
-          Animated.timing(translateX, {
-            toValue: 0,
-            duration: 250,
-            useNativeDriver: true,
-          }),
-          Animated.timing(translateY, {
-            toValue: 0,
-            duration: 250,
-            useNativeDriver: true,
-          }),
-          Animated.timing(scale, {
-            toValue: 1,
-            duration: 250,
-            useNativeDriver: true,
-          }),
-          Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 200,
-            useNativeDriver: true,
-          }),
-        ]).start();
-      });
+      const initialValues = calculateOpeningAnimation(origin, isBanner || false);
+      animateOpen(translateX, translateY, scale, fadeAnim, initialValues);
     } else if (!visible) {
-      // Reset when closed
-      translateX.setValue(0);
-      translateY.setValue(0);
-      scale.setValue(1);
-      fadeAnim.setValue(0);
+      resetAnimationValues(translateX, translateY, scale, fadeAnim);
     }
   }, [visible, origin, fadeAnim, translateX, translateY, scale, isBanner]);
 
   const handleClose = () => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 150,
-        useNativeDriver: true,
-      }),
-      Animated.timing(translateY, {
-        toValue: SCREEN_HEIGHT,
-        duration: 150,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      onClose();
-    });
+    animateClose(fadeAnim, translateY, onClose);
   };
 
   const handleEdit = () => {
@@ -124,39 +69,19 @@ export default function AvatarViewer({
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => {
-        // Only respond to vertical swipes
         return Math.abs(gestureState.dy) > Math.abs(gestureState.dx);
       },
       onPanResponderMove: (evt, gestureState) => {
-        // Only allow downward swipes
-        if (gestureState.dy > 0) {
-          translateY.setValue(gestureState.dy);
-          // Fade out as user swipes down
-          const progress = Math.min(gestureState.dy / 200, 1);
-          fadeAnim.setValue(1 - progress * 0.5);
-        }
+        handleSwipeProgress(translateY, fadeAnim, gestureState.dy);
       },
       onPanResponderRelease: (evt, gestureState) => {
-        // Close if swiped down enough
-        if (gestureState.dy > 100 || gestureState.vy > 0.5) {
-          handleClose();
-        } else {
-          // Bounce back
-          Animated.parallel([
-            Animated.spring(translateY, {
-              toValue: 0,
-              useNativeDriver: true,
-              speed: 20,
-              bounciness: 0,
-            }),
-            Animated.spring(fadeAnim, {
-              toValue: 1,
-              useNativeDriver: true,
-              speed: 20,
-              bounciness: 0,
-            }),
-          ]).start();
-        }
+        handleSwipeRelease(
+          translateY,
+          fadeAnim,
+          gestureState.dy,
+          gestureState.vy,
+          handleClose
+        );
       },
     })
   ).current;

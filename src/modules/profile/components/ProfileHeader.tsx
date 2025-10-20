@@ -2,35 +2,29 @@ import { useRouter } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
 import { useRef, useState } from "react";
 import {
-  findNodeHandle,
   Image,
   Text,
   TouchableOpacity,
-  UIManager,
   View
 } from "react-native";
 import { useTheme } from "../../../context/ThemeContext";
 import { createHeaderStyles } from "../styles/profile-header-styles";
+import { ImageOrigin, openImageViewer } from "../utils/profile-header.utils";
 import AvatarViewer from "./AvatarViewer";
 import EditProfileModal from "./EditProfileModal";
 
 export default function ProfileHeader() {
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [imageUri, setImageUri] = useState("https://randomuser.me/api/portraits/men/1.jpg");
+  const [bannerUri, setBannerUri] = useState("https://picsum.photos/1200/400");
   const { theme } = useTheme();
   const headerStyles = createHeaderStyles(theme);
 
   const router = useRouter();
-  const imageUri = "https://randomuser.me/api/portraits/men/1.jpg";
-  const bannerUri = "https://picsum.photos/1200/400";
 
   // Media Related States
   const [viewerOpen, setViewerOpen] = useState(false);
-  const [origin, setOrigin] = useState<null | {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  }>(null);
+  const [origin, setOrigin] = useState<ImageOrigin>(null);
   const avatarRef = useRef<any>(null);
   const bannerRef = useRef<any>(null);
 
@@ -40,15 +34,9 @@ export default function ProfileHeader() {
       <TouchableOpacity
         activeOpacity={0.95}
         ref={bannerRef}
-        onPress={() => {
-          const handle = findNodeHandle(bannerRef.current);
-          if (handle) {
-            UIManager.measureInWindow(handle, (x, y, width, height) => {
-              setOrigin({ x, y, width, height });
-              setViewerOpen(true);
-            });
-          }
-        }}
+        onPress={() =>
+          openImageViewer(bannerRef, setOrigin, setViewerOpen)
+        }
       >
         <Image source={{ uri: bannerUri }} style={headerStyles.banner} />
 
@@ -66,16 +54,9 @@ export default function ProfileHeader() {
         <TouchableOpacity
           activeOpacity={0.9}
           ref={avatarRef}
-          onPress={() => {
-            // measure avatar position in window and open viewer
-            const handle = findNodeHandle(avatarRef.current);
-            if (handle) {
-              UIManager.measureInWindow(handle, (x, y, width, height) => {
-                setOrigin({ x, y, width, height });
-                setViewerOpen(true);
-              });
-            }
-          }}
+          onPress={() =>
+            openImageViewer(avatarRef, setOrigin, setViewerOpen)
+          }
         >
           <Image source={{ uri: imageUri }} style={headerStyles.avatar} />
         </TouchableOpacity>
@@ -121,7 +102,11 @@ export default function ProfileHeader() {
       {/* Edit Profile Modal */}
       <EditProfileModal
         visible={editModalOpen}
-        onclose={() => setEditModalOpen(false)}
+        imageUri={imageUri}
+        bannerUri={bannerUri}
+        onImageChange={(newUri) => setImageUri(newUri)}
+        onBannerChange={(newUri) => setBannerUri(newUri)}
+        onClose={() => setEditModalOpen(false)}
       />
 
 
