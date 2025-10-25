@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 import {
   Image,
   Modal,
@@ -13,7 +13,7 @@ import { createEditModalStyles } from "../styles/edit-modal-styles";
 import Input from "../ui/Input";
 import { DEFAULT_AVATAR_URI, DEFAULT_BANNER_URI, showImagePickerOptions } from "../utils/edit-profile.utils";
 
-type Props = {
+type IEditProfileModalProps = {
   visible: boolean;
   imageUri: string;
   bannerUri: string;
@@ -22,8 +22,8 @@ type Props = {
   onClose: () => void;
 };
 
-const EditProfileModal: React.FC<Props> = ({ visible, onClose, imageUri, bannerUri, onImageChange, onBannerChange }) => {
-  const [name, setName] = useState(""); 1
+const EditProfileModal: React.FC<IEditProfileModalProps> = ({ visible, onClose, imageUri, bannerUri, onImageChange, onBannerChange }) => {
+  const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
   const [website, setWebsite] = useState("");
@@ -31,7 +31,7 @@ const EditProfileModal: React.FC<Props> = ({ visible, onClose, imageUri, bannerU
   
 
   const { theme } = useTheme();
-  const editModalStyles = createEditModalStyles(theme);
+  const editModalStyles = useMemo(() => createEditModalStyles(theme), [theme]);
 
   const handleAvatarChange = () => {
     showImagePickerOptions(
@@ -159,6 +159,6 @@ const EditProfileModal: React.FC<Props> = ({ visible, onClose, imageUri, bannerU
   );
 };
 
-export default EditProfileModal;
+export default memo(EditProfileModal);
 
 

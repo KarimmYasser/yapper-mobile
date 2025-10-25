@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
-import { ChevronLeft } from "lucide-react-native";
-import { useRef, useState } from "react";
+import { ChevronLeft, Ellipsis } from "lucide-react-native";
+import { useMemo, useRef, useState } from "react";
 import {
   Image,
   Text,
@@ -12,6 +12,8 @@ import { createHeaderStyles } from "../styles/profile-header-styles";
 import { ImageOrigin, openImageViewer } from "../utils/profile-header.utils";
 import AvatarViewer from "./AvatarViewer";
 import EditProfileModal from "./EditProfileModal";
+import ProfileActionsMenu from "./ProfileActionsMenu";
+
 
 type ProfileHeaderProps = {
   userId?: string;
@@ -23,8 +25,11 @@ export default function ProfileHeader({ userId, isOwnProfile = true }: ProfileHe
   const [isFollowing, setIsFollowing] = useState(false);
   const [imageUri, setImageUri] = useState("https://randomuser.me/api/portraits/men/1.jpg");
   const [bannerUri, setBannerUri] = useState("https://picsum.photos/1200/400");
+  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
   const { theme } = useTheme();
-  const headerStyles = createHeaderStyles(theme);
+  const headerStyles = useMemo(() => createHeaderStyles(theme), [theme]);
 
   const router = useRouter();
 
@@ -33,6 +38,18 @@ export default function ProfileHeader({ userId, isOwnProfile = true }: ProfileHe
   const [origin, setOrigin] = useState<ImageOrigin>(null);
   const avatarRef = useRef<any>(null);
   const bannerRef = useRef<any>(null);
+
+  const handleMute = () => {
+    setIsMuted(!isMuted);
+    // TODO: Implement mute functionality
+    console.log(isMuted ? "User unmuted" : "User muted");
+  };
+
+  const handleBlock = () => {
+    setIsBlocked(!isBlocked);
+    // TODO: Implement block functionality
+    console.log(isBlocked ? "User unblocked" : "User blocked");
+  };
 
   return (
     <View style={headerStyles.container}>
@@ -53,6 +70,16 @@ export default function ProfileHeader({ userId, isOwnProfile = true }: ProfileHe
         >
           <ChevronLeft color="#fff" size={25} />
         </TouchableOpacity>
+
+        {/* Profile Actions */}
+        {!isOwnProfile && (
+          <TouchableOpacity
+            style={headerStyles.actionsButton}
+            onPress={() => setActionsMenuOpen(true)}
+          >
+            <Ellipsis color="#fff" size={25} />
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
 
       {/* Image and button Container */}
@@ -143,6 +170,18 @@ export default function ProfileHeader({ userId, isOwnProfile = true }: ProfileHe
         onClose={() => setViewerOpen(false)}
         onEditRequested={isOwnProfile ? () => setEditModalOpen(true) : undefined}
       />
+
+      {/* Profile Actions Menu - Only for other profiles */}
+      {!isOwnProfile && (
+        <ProfileActionsMenu
+          visible={actionsMenuOpen}
+          onClose={() => setActionsMenuOpen(false)}
+          onMute={handleMute}
+          onBlock={handleBlock}
+          initialMuted={isMuted}
+          initialBlocked={isBlocked}
+        />
+      )}
     </View>
   );
 }

@@ -16,7 +16,7 @@ export interface TabConfig {
   component: React.ComponentType<any>;
 }
 
-interface CustomTabViewProps {
+interface ICustomTabViewProps {
   tabs: TabConfig[];
   initialTab?: string;
   scrollEnabled?: boolean;
@@ -44,7 +44,7 @@ export default function CustomTabView({
   tabs,
   initialTab,
   scrollEnabled = false,
-}: CustomTabViewProps) {
+}: ICustomTabViewProps) {
   const layout = useWindowDimensions();
   const { theme } = useTheme();
   const styles = createStyles(theme);

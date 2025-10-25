@@ -17,6 +17,20 @@ export const typography = {
     bold: 'PublicSans-Bold',
     extraBold: 'PublicSans-ExtraBold',
   },
+  weights: {
+    light: '300' as const,
+    regular: '400' as const,
+    medium: '500' as const,
+    semiBold: '600' as const,
+    bold: '700' as const,
+    extraBold: '800' as const,
+    black: '900' as const,
+  },
+  letterSpacing: {
+    tight: -0.4,
+    normal: 0,
+    wide: 0.5,
+  },
 };
 
 export const borderRadius = {
@@ -24,8 +38,10 @@ export const borderRadius = {
   md: 8,
   lg: 12,
   xl: 16,
+  xxl: 14,
   full: 9999,
 };
+
 export const spacing = {
   xs: 4,
   sm: 8,
@@ -33,6 +49,62 @@ export const spacing = {
   lg: 16,
   xl: 20,
   xxl: 24,
+  xxxl: 40,
+};
+
+export const shadows = {
+  sm: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  md: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  lg: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    elevation: 10,
+  },
+};
+
+export const opacity = {
+  disabled: 0.5,
+  overlay: 0.4,
+  translucent: 0.85,
+  semiTransparent: 0.95,
+  border: 0.1,
+  separator: 0.2,
+};
+
+export const sizes = {
+  icon: {
+    xs: 16,
+    sm: 20,
+    md: 22,
+    lg: 25,
+    xl: 34,
+  },
+  avatar: {
+    sm: 40,
+    md: 80,
+    lg: 120,
+  },
+  banner: {
+    height: 160,
+  },
+  button: {
+    height: 34,
+    borderRadius: 17,
+  },
 };
 
 export const colors = {
@@ -81,4 +153,7 @@ export type Theme = {
   colors: typeof colors.light;
   spacing: typeof spacing;
   borderRadius: typeof borderRadius;
+  shadows: typeof shadows;
+  opacity: typeof opacity;
+  sizes: typeof sizes;
 };

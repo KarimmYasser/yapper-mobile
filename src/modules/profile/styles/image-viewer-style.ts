@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
+import { borderRadius, opacity, sizes, spacing, typography } from "../../../constants/theme";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -38,37 +39,37 @@ const ImageViewerStyle = StyleSheet.create({
   },
   topBar: {
     position: "absolute",
-    top: 50,
-    left: 16,
+    top: spacing.xxxl + spacing.md - 2,
+    left: spacing.lg,
     zIndex: 10,
   },
   closeButton: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    backgroundColor: "rgba(15, 20, 25, 0.75)",
+    width: sizes.button.height,
+    height: sizes.button.height,
+    borderRadius: sizes.button.borderRadius,
+    backgroundColor: `rgba(15, 20, 25, ${opacity.translucent - 0.1})`,
     justifyContent: "center",
     alignItems: "center",
   },
   bottomBar: {
     position: "absolute",
-    bottom: 40,
+    bottom: spacing.xxxl,
     left: 0,
     right: 0,
-    paddingHorizontal: 16,
+    paddingHorizontal: spacing.lg,
     zIndex: 10,
   },
   editButton: {
     alignSelf: "flex-start",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    backgroundColor: "rgba(15, 20, 25, 0.75)",
-    borderRadius: 20,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    backgroundColor: `rgba(15, 20, 25, ${opacity.translucent - 0.1})`,
+    borderRadius: borderRadius.xl + spacing.xs,
   },
   editButtonText: {
     color: "#ffffff",
-    fontSize: 15,
-    fontWeight: "700",
+    fontSize: typography.sizes.sm,
+    fontWeight: typography.weights.bold,
   },
 });
 

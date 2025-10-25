@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CustomTabView, { TabConfig } from "../../../components/CustomTabView";
 import { Theme } from "../../../constants/theme";
@@ -17,7 +17,7 @@ const createStyles = (theme: Theme) =>
 
 const PostsRoute = () => {
   const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = useMemo(() => createStyles(theme), [theme]);
   return (
     <View style={styles.page}>
       <Text style={styles.placeholderText}>
@@ -29,7 +29,7 @@ const PostsRoute = () => {
 
 const RepliesRoute = () => {
   const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = useMemo(() => createStyles(theme), [theme]);
   return (
     <View style={styles.page}>
       <Text style={styles.placeholderText}>
@@ -41,7 +41,7 @@ const RepliesRoute = () => {
 
 const MediaRoute = () => {
   const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = useMemo(() => createStyles(theme), [theme]);
   return (
     <View style={styles.page}>
       <Text style={styles.placeholderText}>
@@ -53,7 +53,7 @@ const MediaRoute = () => {
 
 const LikesRoute = () => {
   const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = useMemo(() => createStyles(theme), [theme]);
   return (
     <View style={styles.page}>
       <Text style={styles.placeholderText}>

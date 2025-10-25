@@ -22,7 +22,7 @@ import {
 
 type Origin = { x: number; y: number; width: number; height: number } | null;
 
-type Props = {
+type IAvatarViewerProps = {
   visible: boolean;
   imageUri: string;
   origin: Origin;
@@ -38,7 +38,7 @@ export default function AvatarViewer({
   isBanner,
   onClose,
   onEditRequested,
-}: Props) {
+}: IAvatarViewerProps) {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateX = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;

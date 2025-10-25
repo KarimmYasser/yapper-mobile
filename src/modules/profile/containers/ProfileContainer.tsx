@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { View } from "react-native";
 import { useTheme } from "../../../context/ThemeContext";
 import ProfileHeader from "../components/ProfileHeader";
@@ -11,7 +12,7 @@ type ProfileContainerProps = {
 
 export default function ProfileContainer({ userId, isOwnProfile = true }: ProfileContainerProps) {
   const { theme } = useTheme();
-  const containerStyles = createContainerStyles(theme);
+  const containerStyles = useMemo(() => createContainerStyles(theme), [theme]);
 
   return (
     <View style={containerStyles.container}>

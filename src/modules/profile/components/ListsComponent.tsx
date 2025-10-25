@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CustomTabView, { TabConfig } from "../../../components/CustomTabView";
 import { Theme } from "../../../constants/theme";
@@ -17,7 +17,7 @@ const createStyles = (theme: Theme) =>
 
 const FollowingRoute = () => {
   const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = useMemo(() => createStyles(theme), [theme]);
   return (
     <View style={styles.page}>
       <Text style={styles.placeholderText}>
@@ -29,7 +29,7 @@ const FollowingRoute = () => {
 
 const FollowersRoute = () => {
   const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const styles = useMemo(() => createStyles(theme), [theme]);
   return (
     <View style={styles.page}>
       <Text style={styles.placeholderText}>
