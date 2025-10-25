@@ -26,6 +26,13 @@ const HomeScreen = () => {
       >
         <Text style={styles.buttonText}>Go to Other User Profile</Text>
       </TouchableOpacity>
+
+            <TouchableOpacity 
+        style={styles.button} 
+        onPress={() => router.push('/(profile)/MuteAndBlock/MuteAndBlock')}
+      >
+        <Text style={styles.buttonText}>Go to Mute and Block Screen</Text>
+      </TouchableOpacity>
     </View>
   );
 };
