@@ -3,23 +3,23 @@ import React, { useState } from "react";
 import DropdownMenu, { DropdownMenuItem } from "../../../components/DropdownMenu";
 import { useTheme } from "../../../context/ThemeContext";
 
-type ProfileActionsMenuProps = {
+interface IProfileActionsMenuProps {
   visible: boolean;
   onClose: () => void;
   onMute: () => void;
   onBlock: () => void;
   initialMuted?: boolean;
   initialBlocked?: boolean;
-};
+}
 
-export default function ProfileActionsMenu({
+const ProfileActionsMenu: React.FC<IProfileActionsMenuProps> = ({
   visible,
   onClose,
   onMute,
   onBlock,
   initialMuted = false,
   initialBlocked = false,
-}: ProfileActionsMenuProps) {
+}) => {
   const { theme } = useTheme();
   const [isMuted, setIsMuted] = useState(initialMuted);
   const [isBlocked, setIsBlocked] = useState(initialBlocked);
@@ -59,4 +59,6 @@ export default function ProfileActionsMenu({
       position={{ top: 100, right: 16 }}
     />
   );
-}
+};
+
+export default ProfileActionsMenu;

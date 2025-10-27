@@ -1,10 +1,10 @@
 import { ChevronRight } from "lucide-react-native";
 import React, { useMemo } from "react";
 import {
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useTheme } from "../../../context/ThemeContext";
 import { createMuteAndBlockStyles } from "../styles/mute-and-block-styles";
@@ -17,13 +17,13 @@ interface IMuteAndBlockScreenProps {
   onMutedAccountsPress: () => void;
 }
 
-export default function MuteAndBlockScreen({
+const MuteAndBlockScreen: React.FC<IMuteAndBlockScreenProps> = ({
   username,
   blockedCount = 0,
   mutedCount = 0,
   onBlockedAccountsPress,
   onMutedAccountsPress,
-}: IMuteAndBlockScreenProps) {
+}) => {
   const { theme } = useTheme();
   const styles = useMemo(() => createMuteAndBlockStyles(theme), [theme]);
 
@@ -81,4 +81,6 @@ export default function MuteAndBlockScreen({
       </ScrollView>
     </View>
   );
-}
+};
+
+export default MuteAndBlockScreen;

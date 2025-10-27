@@ -5,6 +5,7 @@ import { useTheme } from "../../../context/ThemeContext";
 
 interface IMuteAndBlockHeaderProps {
   username: string;
+  title: string;
 }
 
 const createStyles = (theme: Theme) =>
@@ -24,14 +25,16 @@ const createStyles = (theme: Theme) =>
     },
   });
 
-export default function MuteAndBlockHeader({ username }: IMuteAndBlockHeaderProps) {
+const MuteAndBlockHeader: React.FC<IMuteAndBlockHeaderProps> = ({ username, title }) => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Mute and block</Text>
+      <Text style={styles.title}>{title}</Text>
       <Text style={styles.subtitle}>@{username}</Text>
     </View>
   );
-}
+};
+
+export default MuteAndBlockHeader;

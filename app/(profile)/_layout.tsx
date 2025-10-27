@@ -1,7 +1,6 @@
 import { Stack } from "expo-router";
 import React from "react";
 import { useTheme } from "../../src/context/ThemeContext";
-import MuteAndBlockHeader from "../../src/modules/profile/components/MuteAndBlockHeader";
 
 export default function ProfileLayout() {
   const { theme } = useTheme();
@@ -30,20 +29,6 @@ export default function ProfileLayout() {
     headerShadowVisible: false,
   }), [username]);
 
-  const muteAndBlockOptions = React.useMemo(() => ({
-    headerTitle: () => <MuteAndBlockHeader username={username} />,
-    headerTitleAlign: "center" as const,
-    headerShadowVisible: false,
-  }), [username]);
-
-  const mutedAccountsOptions = React.useMemo(() => ({
-    headerShown: true,
-    headerBackTitle: "",
-    title: "Muted accounts",
-    headerShadowVisible: false,
-        headerTitleAlign: "center" as const,
-  }), []);
-
   return (
     <Stack screenOptions={screenOptions}>
       <Stack.Screen
@@ -65,12 +50,10 @@ export default function ProfileLayout() {
         options={listsOptions}
       />
       <Stack.Screen
-        name="MuteAndBlock/MuteAndBlock"
-        options={muteAndBlockOptions}
-      />
-      <Stack.Screen
-        name="MuteAndBlock/Muted"
-        options={mutedAccountsOptions}
+        name="MuteAndBlock"
+        options={{
+          headerShown: false,
+        }}
       />
     </Stack>
   );

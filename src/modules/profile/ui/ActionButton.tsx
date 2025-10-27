@@ -14,19 +14,20 @@ type Props = {
   textStyle?: TextStyle;
 };
 
-export default function ActionButton({
+const ActionButton: React.FC<Props> = ({
   onPress,
   title,
   style,
   textStyle,
-}: Props) {
+}) => {
   return (
     <TouchableOpacity style={[styles.btn, style]} onPress={onPress}>
       <Text style={[styles.text, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
-}
+};
 
+export default ActionButton;
 const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 12,

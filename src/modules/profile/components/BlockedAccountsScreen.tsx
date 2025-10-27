@@ -1,18 +1,18 @@
 import React, { useMemo } from "react";
 import {
-  ScrollView,
-  Text,
-  View,
+    ScrollView,
+    Text,
+    View,
 } from "react-native";
 import { useTheme } from "../../../context/ThemeContext";
 import { createMutedAccountsStyles } from "../styles/muted-and-blocked-accounts-styles";
 
-interface IMutedAccountsScreenProps {
-  mutedAccounts?: any[];
+interface IBlockedAccountsScreenProps {
+  blockedAccounts?: any[];
 }
 
-const MutedAccountsScreen: React.FC<IMutedAccountsScreenProps> = ({
-  mutedAccounts = [],
+const BlockedAccountsScreen: React.FC<IBlockedAccountsScreenProps> = ({
+  blockedAccounts = [],
 }) => {
   const { theme } = useTheme();
   const styles = useMemo(() => createMutedAccountsStyles(theme), [theme]);
@@ -22,13 +22,14 @@ const MutedAccountsScreen: React.FC<IMutedAccountsScreenProps> = ({
       <ScrollView>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Muted accounts</Text>
+          <Text style={styles.title}>Block unwanted accounts</Text>
           <Text style={styles.description}>
-            Posts from muted accounts won&apos;t show up in your Home timeline. Mute accounts directly from their profile or posts.
+            They will be able to see your public posts, but will no longer be able to engage with them. They will also not be able to follow
+            or message you, and you will not see notifications from them.
           </Text>
         </View>
 
-        {mutedAccounts.length === 0 && (
+        {blockedAccounts.length === 0 && (
           <View style={styles.emptyState}>
             {/* Empty state can be added later */}
           </View>
@@ -38,4 +39,4 @@ const MutedAccountsScreen: React.FC<IMutedAccountsScreenProps> = ({
   );
 };
 
-export default MutedAccountsScreen;
+export default BlockedAccountsScreen;

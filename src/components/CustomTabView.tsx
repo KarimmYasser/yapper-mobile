@@ -40,11 +40,11 @@ const createStyles = (theme: Theme) =>
     },
   });
 
-export default function CustomTabView({
+const CustomTabView: React.FC<ICustomTabViewProps> = ({
   tabs,
   initialTab,
   scrollEnabled = false,
-}: ICustomTabViewProps) {
+}) => {
   const layout = useWindowDimensions();
   const { theme } = useTheme();
   const styles = createStyles(theme);
@@ -100,4 +100,6 @@ export default function CustomTabView({
       style={styles.container}
     />
   );
-}
+};
+
+export default CustomTabView;

@@ -1,11 +1,11 @@
 import React, { ReactNode } from "react";
 import {
-    Modal,
-    Pressable,
-    Text,
-    TouchableOpacity,
-    View,
-    ViewStyle,
+  Modal,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import { createDropdownMenuStyles } from "../styles/dropdown-menu-styles";
@@ -26,13 +26,13 @@ interface IDropdownMenuProps {
   containerStyle?: ViewStyle;
 }
 
-export default function DropdownMenu({
+const DropdownMenu: React.FC<IDropdownMenuProps> = ({
   visible,
   onClose,
   items,
   position = { top: 100, right: 16 },
   containerStyle,
-}: IDropdownMenuProps) {
+}) => {
   const { theme, isDark } = useTheme();
   const styles = createDropdownMenuStyles(theme, isDark);
 
@@ -77,4 +77,6 @@ export default function DropdownMenu({
       </Pressable>
     </Modal>
   );
-}
+};
+
+export default DropdownMenu;

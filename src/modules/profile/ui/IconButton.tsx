@@ -7,14 +7,15 @@ type Props = {
   children?: React.ReactNode;
 };
 
-export default function IconButton({ onPress, style, children }: Props) {
+const IconButton: React.FC<Props> = ({ onPress, style, children }) => {
   return (
     <TouchableOpacity style={[styles.wrapper, style]} onPress={onPress}>
       {children}
     </TouchableOpacity>
   );
-}
+};
 
+export default IconButton;
 const styles = StyleSheet.create({
   wrapper: {
     width: 44,

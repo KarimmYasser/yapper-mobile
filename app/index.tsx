@@ -29,7 +29,7 @@ const HomeScreen = () => {
 
             <TouchableOpacity 
         style={styles.button} 
-        onPress={() => router.push('/(profile)/MuteAndBlock/MuteAndBlock')}
+        onPress={() => router.push('/(profile)/MuteAndBlock/MuteAndBlockScreen')}
       >
         <Text style={styles.buttonText}>Go to Mute and Block Screen</Text>
       </TouchableOpacity>
