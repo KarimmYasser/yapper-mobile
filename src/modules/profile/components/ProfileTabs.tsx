@@ -1,8 +1,9 @@
 import React, { useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import CustomTabView, { TabConfig } from "../../../components/CustomTabView";
 import { Theme } from "../../../constants/theme";
 import { useTheme } from "../../../context/ThemeContext";
+import WhoToFollow from "./WhoToFollow";
 
 const createStyles = (theme: Theme) =>
   StyleSheet.create({
@@ -19,11 +20,12 @@ const PostsRoute = () => {
   const { theme } = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   return (
-    <View style={styles.page}>
+    <ScrollView style={styles.page}>
+      <WhoToFollow />
       <Text style={styles.placeholderText}>
         Tweets will be shown here.
       </Text>
-    </View>
+    </ScrollView>
   );
 };
 
