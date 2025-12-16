@@ -102,7 +102,7 @@ const TrendingList: React.FC<ITrendingListProps> = ({
       <FlatList
         data={trends}
         renderItem={renderItem}
-        keyExtractor={(item, index) => ('referenceId' in item ? item.referenceId : `trend-${index}`)}
+        keyExtractor={(item, index) => ('text' in item ? item.text : `trend-${index}`)}
         ListEmptyComponent={renderEmpty}
         refreshControl={
           onRefresh ? (

@@ -10,7 +10,8 @@
     "tabs": {
       "forYou": "For You",
       "following": "Following"
-    }
+    },
+    "emptyList": "No posts to show"
   },
   "app": {
     "title": "Yapper"

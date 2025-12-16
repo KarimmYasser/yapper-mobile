@@ -14,13 +14,15 @@ import { useTweetActions } from '@/src/modules/tweets/hooks/useTweetActions';
 import { useTweets } from '@/src/modules/tweets/hooks/useTweets';
 import { useTweetsFiltersStore } from '@/src/modules/tweets/store/useTweetsFiltersStore';
 import React, { useState } from 'react';
-import { Animated, Platform, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Animated, Platform, StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   const { theme } = useTheme();
   const { top, bottom } = useSpacing();
   const styles = createStyles(theme);
 
+  const { t } = useTranslation();
   const { translateX, tabSwipePanResponder, homeIndex, setHomeIndex, screenWidth } = useSwipableTabs();
   const [isCreatePostModalVisible, setIsCreatePostModalVisible] = useState(false);
 
@@ -58,6 +60,14 @@ export default function HomeScreen() {
 
   const { addPostMutation } = useTweetActions();
 
+  const renderEmptyComponent = () => {
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}>{t('home.emptyList')}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <MediaViewerProvider>
@@ -83,6 +93,7 @@ export default function HomeScreen() {
                 useCustomRefreshIndicator={Platform.OS === 'ios'}
                 topSpacing={top}
                 bottomSpacing={bottom}
+                listEmptyComponent={renderEmptyComponent}
               />
             </View>
             <View style={[styles.tabPage, { width: screenWidth }]}>
@@ -97,6 +108,7 @@ export default function HomeScreen() {
                 useCustomRefreshIndicator={Platform.OS === 'ios'}
                 topSpacing={top}
                 bottomSpacing={bottom}
+                listEmptyComponent={renderEmptyComponent}
               />
             </View>
           </Animated.View>
@@ -136,5 +148,17 @@ const createStyles = (theme: Theme) =>
     },
     tabPage: {
       flex: 1,
+    },
+    emptyContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingVertical: 60,
+      paddingHorizontal: 20,
+    },
+    emptyText: {
+      color: theme.colors.text.secondary,
+      fontSize: theme.typography.sizes.md,
+      textAlign: 'center',
     },
   });

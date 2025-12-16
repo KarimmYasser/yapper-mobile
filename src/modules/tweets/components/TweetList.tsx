@@ -20,6 +20,7 @@ interface ITweetListProps {
   isTabActive?: boolean;
   useCustomRefreshIndicator?: boolean;
   listHeaderComponent?: React.ReactNode;
+  listEmptyComponent?: React.FC;
 }
 const TweetList: React.FC<ITweetListProps> = (props) => {
   const {
@@ -35,6 +36,7 @@ const TweetList: React.FC<ITweetListProps> = (props) => {
     isTabActive = true,
     useCustomRefreshIndicator = false,
     listHeaderComponent: ListHeaderComponent,
+    listEmptyComponent: ListEmptyComponent,
   } = props;
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
@@ -118,6 +120,7 @@ const TweetList: React.FC<ITweetListProps> = (props) => {
       testID="tweet_list_feed"
       ListHeaderComponent={renderHeader}
       ListFooterComponent={renderFooter}
+      ListEmptyComponent={ListEmptyComponent}
       onEndReached={onEndReached}
       onEndReachedThreshold={onEndReachedThreshold ?? 0.5}
       removeClippedSubviews={false}
@@ -151,6 +154,7 @@ const createStyles = (theme: Theme) =>
       justifyContent: 'center',
       width: '100%',
     },
+
     list: {
       flex: 1,
     },
