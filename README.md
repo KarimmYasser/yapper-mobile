@@ -24,37 +24,37 @@ In a world full of long-form articles and polished updates, **Yapper** is built 
 ### Landing screen & Create account
 
 <div align="center">
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/1.jpeg" height="600" alt="landing-screen" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/1.jpeg" height="600" alt="landing-screen" />
 
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/2.jpeg" height="600" alt="create-account" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/2.jpeg" height="600" alt="create-account" />
 </div>
 
 ### Home feed & Search
 
 <div align="center">
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/3.jpeg" height="600" alt="home-feed" />
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/4.jpeg" height="600" alt="search" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/3.jpeg" height="600" alt="home-feed" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/4.jpeg" height="600" alt="search" />
 </div>
 
 ### Notifications
 
 <div align="center">
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/5.jpeg" height="600" alt="notifications-all" />
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/6.jpeg" height="600" alt="notifications-mentions" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/5.jpeg" height="600" alt="notifications-all" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/6.jpeg" height="600" alt="notifications-mentions" />
 </div>
 
 ### Chat
 
 <div align="center">
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/7.jpeg" height="600" alt="chat-all" />
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/8.jpeg" height="600" alt="chat-individual" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/7.jpeg" height="600" alt="chat-all" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/8.jpeg" height="600" alt="chat-individual" />
 </div>
 
 ### Profile
 
 <div align="center">
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/9.jpeg" height="600" alt="profile" />
-<img src="https://github.com/KarimmYasser/yapper-mobile/blob/main/readme-assets/10.jpeg" height="600" alt="edit-profile" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/9.jpeg" height="600" alt="profile" />
+<img src="https://github.com/KarimmYasser/yapper-mobile/blob/dev/readme-assets/10.jpeg" height="600" alt="edit-profile" />
 </div>
 
 ---
